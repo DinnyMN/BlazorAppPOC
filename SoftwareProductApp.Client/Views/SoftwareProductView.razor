@@ -1,0 +1,51 @@
+﻿@page "/"
+@inject ViewModels.ISoftwareProductViewModel softwareProductViewModel
+
+
+<h3>Software Product Search</h3>
+
+<div class="input-group">
+    <input @bind="@VersionInput" />
+    <button @onclick="OnClick" class="btn btn-light">Search</button>
+</div>
+<small class="form-text text-muted">@ValidationText</small>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Version</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (softwareProducts != null)
+        {
+            @foreach (var softwareProduct in softwareProducts)
+            {
+                <tr>
+                    <td>@softwareProduct.Name</td>
+                    <td>@softwareProduct.Version</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    string VersionInput { get; set; } = "";
+    string ValidationText { get; set; } = "";
+    IEnumerable<Shared.SoftwareProduct> softwareProducts;
+
+
+    private void OnClick()
+    {
+        if (softwareProductViewModel.IsValidVersion(VersionInput))
+        {
+            ValidationText = "";
+            softwareProducts = softwareProductViewModel.GetHigherVersionSoftwareProducts(VersionInput);
+        }
+        else
+        {
+            ValidationText = "Version must be Numeric and follow [major].[minor].[patch]";
+        }
+    }
+}
