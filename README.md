@@ -1,5 +1,9 @@
 # BlazorAppPOC
 
+demo
+https://dinndjoemergentsitesa.z19.web.core.windows.net/
+
+
 Get started with Blazor:
 
 Install the latest .NET Core 3.0 Preview SDK release.
